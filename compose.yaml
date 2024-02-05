@@ -1,0 +1,37 @@
+services:
+  rp:
+    image: nginx:alpine
+    container_name: ooc2024-rp
+    restart: unless-stopped
+    tty: true
+    depends_on:
+      - app
+    ports:
+      - 8080:80
+    volumes:
+      - ./src/public:/src/public
+      - ./nginx/logs:/var/log/nginx/
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  app:
+    container_name: ooc2024-app
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./src:/var/www
+
+  db:
+    image: mysql:8.0
+    container_name: ooc2024-db
+    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd!
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/logs:/var/log/mysql
+      - ./db/authentication.cnf:/etc/mysql/conf.d/authentication.cnf
+      - ./db/init.d:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
