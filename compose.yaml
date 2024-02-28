@@ -26,8 +26,7 @@ services:
     container_name: ooc2024-db
     restart: unless-stopped
     tty: true
-    environment:
-      MYSQL_ROOT_PASSWORD: P@ssw0rd!
+    env_file: .env
     volumes:
       - ./db/data:/var/lib/mysql
       - ./db/logs:/var/log/mysql
