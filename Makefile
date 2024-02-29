@@ -2,6 +2,9 @@
 migrate-%:
 	docker compose run app bash -c "php artisan make:model $* --migration"
 
+gen-controller-%: # e.g. make gen-controller-ProductController
+	docker compose run app bash -c "php artisan make:controller $*"
+
 .PHONY: migrate-%
 
 migrate:

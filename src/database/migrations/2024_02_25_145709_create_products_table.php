@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('price', 8, 2);
+            $table->string('name')->comment("商品名");
+            $table->decimal('price', 8, 2)->comment("商品単価");
             $table->timestamps();
         });
     }
